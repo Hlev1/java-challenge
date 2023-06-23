@@ -1,4 +1,4 @@
-package io.carbonchain.hiring.java;
+package io.carbonchain.hiring.java.exception;
 
 public class ApplicationException extends Exception {
 
