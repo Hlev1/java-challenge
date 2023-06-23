@@ -1,11 +1,17 @@
 package io.carbonchain.hiring.java.middleware;
 
-import io.carbonchain.hiring.java.Request;
+import io.carbonchain.hiring.java.models.request.Request;
+import io.carbonchain.hiring.java.models.request.SmallestScopeSearchRequest;
 
 public class SmallestScopeSearchModelsMiddleware implements Middleware {
 
     @Override
     public Request handle(Request request) {
-        return request;
+        var params = request.getParams();
+        if (params.length < 2) {
+            return request;
+        }
+
+        return new SmallestScopeSearchRequest(params[0], params[1]);
     }
 }
