@@ -1,6 +1,6 @@
 package io.carbonchain.hiring.java.app;
 
-import io.carbonchain.hiring.java.Request;
+import io.carbonchain.hiring.java.models.request.Request;
 import io.carbonchain.hiring.java.controller.Controller;
 import io.carbonchain.hiring.java.exception.ApplicationException;
 import io.carbonchain.hiring.java.middleware.Middleware;
@@ -48,20 +48,6 @@ public class Core {
     if (controller == null) {
       throw new ApplicationException("Path " + path + " has no matching controller");
     }
-    return invokeEndpoint(endpoint, controller, request);
-  }
-
-  private String invokeEndpoint(
-      String endpoint,
-      Controller controller,
-      Request request
-  ) throws ApplicationException {
-    try {
-      return (String) controller.getClass()
-          .getDeclaredMethod(endpoint, request.getClass())
-          .invoke(controller, request);
-    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      throw new ApplicationException("Problem when calling endpoint " + endpoint + ": " + e.getCause());
-    }
+    return controller.handle(request);
   }
 }
