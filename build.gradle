@@ -5,7 +5,7 @@ plugins {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-mainClassName = 'io.carbonchain.hiring.java.Application'
+mainClassName = 'io.carbonchain.hiring.java.app.Application'
 
 repositories {
     mavenCentral()
