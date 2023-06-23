@@ -2,13 +2,15 @@ package io.carbonchain.hiring.java;
 
 public class Request {
 
-  private String[] params;
+  private final String commodity;
+  private final String asset;
 
-  public Request(String[] params) {
-    this.params = params;
+  public Request(String commodity, String asset) {
+    this.commodity = commodity;
+    this.asset = asset;
   }
 
-  public String get(int position) {
-    return params[position];
+  public String getCommodity() {
+    return commodity;
   }
 }
