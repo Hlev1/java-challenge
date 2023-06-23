@@ -19,4 +19,12 @@ public class Model {
   public Double getEmissionIntensity() {
     return emissionIntensity;
   }
+
+  public String getCommodity() {
+    return commodity;
+  }
+
+  public String getScope() {
+    return scope;
+  }
 }
