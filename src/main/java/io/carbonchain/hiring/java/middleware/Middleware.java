@@ -1,6 +1,6 @@
 package io.carbonchain.hiring.java.middleware;
 
-import io.carbonchain.hiring.java.Request;
+import io.carbonchain.hiring.java.models.request.Request;
 
 public interface Middleware {
   public Request handle(Request request);
