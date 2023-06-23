@@ -6,6 +6,9 @@ import io.carbonchain.hiring.java.domain.Asset;
 import io.carbonchain.hiring.java.domain.AssetRepository;
 import io.carbonchain.hiring.java.domain.Model;
 import io.carbonchain.hiring.java.domain.ModelRepository;
+import io.carbonchain.hiring.java.middleware.Middleware;
+import io.carbonchain.hiring.java.middleware.SmallestScopeSearchModelsMiddleware;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -20,7 +23,7 @@ public class Application {
     ModelRepository modelRepository = Application.prepareModelRepository();
 
     HashMap<String, Middleware[]> middlewares = new HashMap<>();
-//    middlewares.put("search", new SomeSearchModelsMiddleware());
+    middlewares.put("search", new Middleware[]{ new SmallestScopeSearchModelsMiddleware() });
 
     HashMap<String, Controller> controllers = new HashMap<>();
     controllers.put("models", new ModelsController(assetRepository, modelRepository));
