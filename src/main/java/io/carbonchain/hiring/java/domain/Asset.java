@@ -15,4 +15,10 @@ public class Asset {
   public boolean nameMatches(String term) {
     return name.equals(term);
   }
+
+  public String getName() { return name; }
+
+  public String getCountry() { return country; }
+
+  public String getContinent() { return continent; }
 }
