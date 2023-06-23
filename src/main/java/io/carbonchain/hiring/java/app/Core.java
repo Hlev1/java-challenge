@@ -6,6 +6,7 @@ import io.carbonchain.hiring.java.exception.ApplicationException;
 import io.carbonchain.hiring.java.middleware.Middleware;
 
 import java.lang.reflect.InvocationTargetException;
+import io.carbonchain.hiring.java.exception.TooManyParamsException;
 import java.util.HashMap;
 
 public class Core {
@@ -20,11 +21,22 @@ public class Core {
 
   public String run(String path, String endpoint, String[] params) {
     try {
-      Request request = applyMiddleware(endpoint, new Request(params));
+      Request request = applyMiddleware(endpoint, buildRequestFromParams(params));
       return dispatchController(path, endpoint, request);
     } catch (ApplicationException e) {
       return "Problem when processing request: " + e.getMessage();
     }
+  }
+
+  private Request buildRequestFromParams(String[] params) throws TooManyParamsException {
+    if (params.length > 2) {
+      throw new TooManyParamsException();
+    }
+
+    var commodity = params[0];
+    var asset = params.length == 2 ? params[1] : null;
+
+    return new Request(commodity, asset);
   }
 
   private Request applyMiddleware(String endpoint, Request request) {
