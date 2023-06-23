@@ -1,7 +1,7 @@
-package io.carbonchain.hiring.java.app.controller;
+package io.carbonchain.hiring.java.controller;
 
-import io.carbonchain.hiring.java.ApplicationException;
-import io.carbonchain.hiring.java.Controller;
+import io.carbonchain.hiring.java.exception.ApplicationException;
+import io.carbonchain.hiring.java.controller.Controller;
 import io.carbonchain.hiring.java.Request;
 import io.carbonchain.hiring.java.domain.AssetRepository;
 import io.carbonchain.hiring.java.domain.Model;

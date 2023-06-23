@@ -1,6 +1,7 @@
-package io.carbonchain.hiring.java;
+package io.carbonchain.hiring.java.app;
 
-import io.carbonchain.hiring.java.app.controller.ModelsController;
+import io.carbonchain.hiring.java.controller.ModelsController;
+import io.carbonchain.hiring.java.controller.Controller;
 import io.carbonchain.hiring.java.domain.Asset;
 import io.carbonchain.hiring.java.domain.AssetRepository;
 import io.carbonchain.hiring.java.domain.Model;
