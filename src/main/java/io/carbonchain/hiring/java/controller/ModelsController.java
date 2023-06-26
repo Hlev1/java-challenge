@@ -1,6 +1,7 @@
 package io.carbonchain.hiring.java.controller;
 
 import io.carbonchain.hiring.java.exception.ApplicationException;
+import io.carbonchain.hiring.java.exception.RequestHandlerNotFoundException;
 import io.carbonchain.hiring.java.handler.RequestHandler;
 import io.carbonchain.hiring.java.models.request.Request;
 import io.carbonchain.hiring.java.domain.AssetRepository;
@@ -30,7 +31,7 @@ public class ModelsController implements Controller {
       return handler.handle(request);
 
     } catch (NoSuchElementException e) {
-      throw new ApplicationException("cannot process request");
+      throw new RequestHandlerNotFoundException(request);
     }
   }
 

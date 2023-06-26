@@ -1,8 +1,7 @@
 package io.carbonchain.hiring.java.controller;
 
-import io.carbonchain.hiring.java.domain.AssetRepository;
-import io.carbonchain.hiring.java.domain.ModelRepository;
 import io.carbonchain.hiring.java.exception.ApplicationException;
+import io.carbonchain.hiring.java.exception.RequestHandlerNotFoundException;
 import io.carbonchain.hiring.java.handler.RequestHandler;
 import io.carbonchain.hiring.java.models.request.Request;
 import org.junit.jupiter.api.Assertions;
@@ -39,7 +38,7 @@ public class ModelsControllerTest {
         Mockito.when(requestHandler.canHandle(request)).thenReturn(false);
 
         // Act and Assert
-        Assertions.assertThrows(ApplicationException.class, () -> {
+        Assertions.assertThrows(RequestHandlerNotFoundException.class, () -> {
             controller.handle(request);
         });
         Mockito.verify(requestHandler, Mockito.never()).handle(request);
