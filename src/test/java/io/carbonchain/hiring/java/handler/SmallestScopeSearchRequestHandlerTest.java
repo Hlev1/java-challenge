@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.mockito.ArgumentMatchers.any;
+
 public class SmallestScopeSearchRequestHandlerTest {
 
     GlobalScopeRequestHandler globalScopeRequestHandler = Mockito.mock(GlobalScopeRequestHandler.class);
@@ -90,5 +92,19 @@ public class SmallestScopeSearchRequestHandlerTest {
 
         // Assert
         Assertions.assertEquals("India emission intensity for Copper is 18.223", actual);
+    }
+
+    @Test()
+    public void testHandle_HandlesSmallestScopeSearchRequest_ReturnsGlobalScope() {
+        // Arrange
+        String globalEmission = "Global emission";
+        SmallestScopeSearchRequest request = new SmallestScopeSearchRequest("Zinc", "Khetri");
+        Mockito.when(globalScopeRequestHandler.handle(any())).thenReturn(globalEmission);
+
+        // Act
+        String actual = handler.handle(request);
+
+        // Assert
+        Assertions.assertEquals(globalEmission, actual);
     }
 }
