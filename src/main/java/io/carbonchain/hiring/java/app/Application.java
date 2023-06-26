@@ -6,7 +6,9 @@ import io.carbonchain.hiring.java.domain.Asset;
 import io.carbonchain.hiring.java.domain.AssetRepository;
 import io.carbonchain.hiring.java.domain.Model;
 import io.carbonchain.hiring.java.domain.ModelRepository;
+import io.carbonchain.hiring.java.handler.GlobalScopeRequestHandler;
 import io.carbonchain.hiring.java.handler.RequestHandler;
+import io.carbonchain.hiring.java.handler.SmallestScopeSearchRequestHandler;
 import io.carbonchain.hiring.java.middleware.GlobalScopeSearchModelsMiddleware;
 import io.carbonchain.hiring.java.middleware.Middleware;
 import io.carbonchain.hiring.java.middleware.SmallestScopeSearchModelsMiddleware;
@@ -24,7 +26,14 @@ public class Application {
     AssetRepository assetRepository = Application.prepareAssetRepository();
     ModelRepository modelRepository = Application.prepareModelRepository();
 
-    RequestHandler[] requestHandlers = new RequestHandler[]{};
+    GlobalScopeRequestHandler globalScopeRequestHandler = new GlobalScopeRequestHandler(modelRepository);
+    SmallestScopeSearchRequestHandler smallestScopeSearchRequestHandler =
+            new SmallestScopeSearchRequestHandler(assetRepository, modelRepository, globalScopeRequestHandler);
+
+    RequestHandler[] requestHandlers = new RequestHandler[]{
+            smallestScopeSearchRequestHandler,
+            globalScopeRequestHandler
+    };
 
     HashMap<String, Middleware[]> middlewares = new HashMap<>();
     middlewares.put(
