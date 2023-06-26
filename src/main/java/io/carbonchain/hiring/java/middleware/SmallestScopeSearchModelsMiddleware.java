@@ -8,10 +8,10 @@ public class SmallestScopeSearchModelsMiddleware implements Middleware {
     @Override
     public Request handle(Request request) {
         var params = request.getParams();
-        if (params.length < 2) {
-            return request;
+        if (params.length == 2) {
+            return new SmallestScopeSearchRequest(params[0], params[1]);
         }
 
-        return new SmallestScopeSearchRequest(params[0], params[1]);
+        return request;
     }
 }
