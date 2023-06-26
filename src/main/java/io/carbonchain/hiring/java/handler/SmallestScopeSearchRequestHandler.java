@@ -4,6 +4,7 @@ import io.carbonchain.hiring.java.domain.Asset;
 import io.carbonchain.hiring.java.domain.AssetRepository;
 import io.carbonchain.hiring.java.domain.Model;
 import io.carbonchain.hiring.java.domain.ModelRepository;
+import io.carbonchain.hiring.java.models.request.GlobalScopeSearchRequest;
 import io.carbonchain.hiring.java.models.request.Request;
 import io.carbonchain.hiring.java.models.request.SmallestScopeSearchRequest;
 
@@ -37,6 +38,11 @@ public class SmallestScopeSearchRequestHandler implements RequestHandler {
         String commodity = searchRequest.getCommodity();
 
         Asset asset = assetRepository.findByName(searchRequest.getAsset());
+
+        if (asset == null) {
+            return handle(searchRequest.toGlobalScopeSearchRequest());
+        }
+
         Model[] models = modelRepository.findAllByCommodity(commodity);
 
         for (String scope : new String[] {asset.getName(), asset.getCountry(), asset.getContinent()}) {
@@ -52,6 +58,10 @@ public class SmallestScopeSearchRequestHandler implements RequestHandler {
         }
 
 
-        return globalScopeRequestHandler.handle(searchRequest.toGlobalScopeSearchRequest());
+        return handle(searchRequest.toGlobalScopeSearchRequest());
+    }
+
+    private String handle(GlobalScopeSearchRequest request) {
+        return globalScopeRequestHandler.handle(request);
     }
 }

@@ -10,6 +10,7 @@ import io.carbonchain.hiring.java.models.request.SearchRequest;
 import io.carbonchain.hiring.java.models.request.SmallestScopeSearchRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -97,14 +98,30 @@ public class SmallestScopeSearchRequestHandlerTest {
     @Test()
     public void testHandle_HandlesSmallestScopeSearchRequest_ReturnsGlobalScope() {
         // Arrange
-        String globalEmission = "Global emission";
+        Mockito.when(globalScopeRequestHandler.handle(any())).thenReturn("globalEmission");
         SmallestScopeSearchRequest request = new SmallestScopeSearchRequest("Zinc", "Khetri");
-        Mockito.when(globalScopeRequestHandler.handle(any())).thenReturn(globalEmission);
 
         // Act
         String actual = handler.handle(request);
 
         // Assert
-        Assertions.assertEquals(globalEmission, actual);
+        Assertions.assertEquals(globalScopeRequestHandler.handle(request), actual);
+    }
+
+    @Test()
+    public void testHandle_AssetNotFound_ReturnsGlobalScopeWithoutCallingModelRepository() {
+        // Arrange
+        Mockito.when(globalScopeRequestHandler.handle(any())).thenReturn("globalEmission");
+        ModelRepository modelRepository = Mockito.mock(ModelRepository.class);
+        SmallestScopeSearchRequest request = new SmallestScopeSearchRequest("Zinc", "NotFound");
+        SmallestScopeSearchRequestHandler handler =
+                new SmallestScopeSearchRequestHandler(assetRepository, modelRepository, globalScopeRequestHandler);
+
+        // Act
+        String actual = handler.handle(request);
+
+        // Assert
+        Assertions.assertEquals(globalScopeRequestHandler.handle(request), actual);
+        Mockito.verify(modelRepository, Mockito.never()).findAllByCommodity(any());
     }
 }
