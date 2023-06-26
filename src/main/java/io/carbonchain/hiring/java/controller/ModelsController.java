@@ -61,7 +61,7 @@ public class ModelsController implements Controller {
       return scope + " emission intensity for " + commodity + " is " + model.get().getEmissionIntensity();
     }
 
-    return handle((GlobalScopeSearchRequest) request);
+    return handle(request.toGlobalScopeSearchRequest());
   }
 
   private Double averageModels(List<Model> models) {

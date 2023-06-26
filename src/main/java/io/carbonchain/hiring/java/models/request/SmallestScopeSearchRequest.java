@@ -1,6 +1,6 @@
 package io.carbonchain.hiring.java.models.request;
 
-public class SmallestScopeSearchRequest extends GlobalScopeSearchRequest {
+public class SmallestScopeSearchRequest extends SearchRequest {
 
     private final String asset;
 
@@ -11,4 +11,8 @@ public class SmallestScopeSearchRequest extends GlobalScopeSearchRequest {
     }
 
     public String getAsset() { return asset; }
+
+    public GlobalScopeSearchRequest toGlobalScopeSearchRequest() {
+        return new GlobalScopeSearchRequest(getCommodity());
+    }
 }
