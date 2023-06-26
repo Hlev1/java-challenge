@@ -14,6 +14,14 @@ public class AssetTest {
   }
 
   @Test()
+  public void testNameMatches_NameMatchesTermCaseInsensitive_ReturnsTrue() {
+    Asset asset = new Asset("Some name", "Some country", "Some continent");
+
+    Assertions.assertTrue(asset.nameMatches("SOME NAME"),
+            "Asset should match because it has matching name, ignoring the case");
+  }
+
+  @Test()
   public void testNameMatches_NameDoesNotMatchTerm_ReturnsFalse() {
     Asset asset = new Asset("Some name", "Some country", "Some continent");
 

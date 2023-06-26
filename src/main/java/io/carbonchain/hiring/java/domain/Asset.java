@@ -13,7 +13,7 @@ public class Asset {
   }
 
   public boolean nameMatches(String term) {
-    return name.equals(term);
+    return name.toLowerCase().equals(term.toLowerCase());
   }
 
   public String getName() { return name; }
