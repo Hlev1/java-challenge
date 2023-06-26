@@ -2,7 +2,7 @@ package io.carbonchain.hiring.java.models.request;
 
 public class Request {
 
-  private String[] params;
+  private final String[] params;
 
   public Request(String[] params) {
     this.params = params;
