@@ -22,7 +22,7 @@ public class Core {
   public String run(String path, String endpoint, String[] params) {
     try {
       Request request = applyMiddleware(endpoint, new Request(params));
-      return dispatchController(path, endpoint, request);
+      return dispatchController(path, request);
     } catch (ApplicationException e) {
       return "Problem when processing request: " + e.getMessage();
     }
@@ -41,7 +41,6 @@ public class Core {
 
   private String dispatchController(
       String path,
-      String endpoint,
       Request request
   ) throws ApplicationException {
     Controller controller = controllers.get(path);
