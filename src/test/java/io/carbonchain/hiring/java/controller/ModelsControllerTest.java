@@ -1,73 +1,47 @@
 package io.carbonchain.hiring.java.controller;
 
-import io.carbonchain.hiring.java.domain.Asset;
 import io.carbonchain.hiring.java.domain.AssetRepository;
-import io.carbonchain.hiring.java.domain.Model;
 import io.carbonchain.hiring.java.domain.ModelRepository;
 import io.carbonchain.hiring.java.exception.ApplicationException;
+import io.carbonchain.hiring.java.handler.RequestHandler;
 import io.carbonchain.hiring.java.models.request.Request;
-import io.carbonchain.hiring.java.models.request.SearchRequest;
-import io.carbonchain.hiring.java.models.request.SmallestScopeSearchRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class ModelsControllerTest {
 
-    AssetRepository assetRepository = new AssetRepository(new Asset[]{
-            new Asset("Khetri", "India", "Asia"),
-            new Asset("Tara", "Ireland", "Europe"),
-    });
+    RequestHandler requestHandler = Mockito.mock(RequestHandler.class);
 
-    ModelRepository modelRepository = new ModelRepository(new Model[]{
-            new Model("Copper", "India", 18.223),
-            new Model("Zinc", null, 5.33),
-    });
+    RequestHandler[] requestHandlers = new RequestHandler[] {
+        requestHandler
+    };
 
-    final ModelsController controller = new ModelsController(assetRepository, modelRepository);
+    ModelsController controller = new ModelsController(requestHandlers);
 
     @Test()
-    public void testHandle_HandlesSmallestScopeSearchRequest_ReturnsSmallestScope() throws ApplicationException {
+    public void testHandle_HandlerCanHandleRequest_InvokesHandler() throws ApplicationException {
         // Arrange
-        SmallestScopeSearchRequest request = new SmallestScopeSearchRequest("Copper", "Khetri");
+        Request request = new Request(new String[]{});
+        Mockito.when(requestHandler.canHandle(request)).thenReturn(true);
 
         // Act
-        String actual = controller.handle(request);
+        controller.handle(request);
 
         // Assert
-        Assertions.assertEquals("India emission intensity for Copper is 18.223", actual);
+        Mockito.verify(requestHandler).handle(request);
     }
 
     @Test()
-    public void testHandle_HandlesSmallestScopeSearchRequest_ReturnsGlobalScope() throws ApplicationException {
+    public void testHandle_HandlerCannotHandleRequest_ThrowsApplicationException() {
         // Arrange
-        SmallestScopeSearchRequest request = new SmallestScopeSearchRequest("Zinc", "Tara");
-
-        // Act
-        String actual = controller.handle(request);
-
-        // Assert
-        Assertions.assertEquals("Global emission intensity for Zinc is 5.33", actual);
-    }
-
-    @Test()
-    public void testHandle_HandlesSearchRequest_ThrowsApplicationException() throws ApplicationException {
-        // Arrange
-        SearchRequest request = new SearchRequest("Zinc");
+        Request request = new Request(new String[]{});
+        Mockito.when(requestHandler.canHandle(request)).thenReturn(false);
 
         // Act and Assert
         Assertions.assertThrows(ApplicationException.class, () -> {
             controller.handle(request);
         });
-    }
-
-    @Test()
-    public void testHandle_HandlesRequest_ThrowsApplicationException() throws ApplicationException {
-        // Arrange
-        Request request = new Request(new String[]{"models search Copper"});
-
-        // Act and Assert
-        Assertions.assertThrows(ApplicationException.class, () -> {
-            controller.handle(request);
-        });
+        Mockito.verify(requestHandler, Mockito.never()).handle(request);
     }
 }

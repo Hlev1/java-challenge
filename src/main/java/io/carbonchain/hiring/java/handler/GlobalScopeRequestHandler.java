@@ -4,7 +4,6 @@ import io.carbonchain.hiring.java.domain.ModelRepository;
 import io.carbonchain.hiring.java.models.request.GlobalScopeSearchRequest;
 import io.carbonchain.hiring.java.models.request.Request;
 import io.carbonchain.hiring.java.models.request.SearchRequest;
-import io.carbonchain.hiring.java.models.request.SmallestScopeSearchRequest;
 
 public class GlobalScopeRequestHandler implements RequestHandler {
 
