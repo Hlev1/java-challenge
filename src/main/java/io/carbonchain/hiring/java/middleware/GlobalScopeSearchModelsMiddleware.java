@@ -8,10 +8,10 @@ public class GlobalScopeSearchModelsMiddleware implements Middleware {
     @Override
     public Request handle(Request request) {
         var params = request.getParams();
-        if (params.length > 1) {
-            return request;
+        if (params.length == 1) {
+            return new GlobalScopeSearchRequest(params[0]);
         }
 
-        return new GlobalScopeSearchRequest(params[0]);
+        return request;
     }
 }
