@@ -148,4 +148,4 @@ Here I state some questions that I asked myself whilst working on this:
 
 #### Conclusion
 Overall, I have really enjoyed getting a small glimpse into the codebase of CarbonChain and learning more about the different
-domain entities that exist in the business. I am looking forward to iterating on this project further in the next stages of the interview!
+domain entities that exist in the business. I am looking forward to iterating on this project further in the next stages of the interview process!
