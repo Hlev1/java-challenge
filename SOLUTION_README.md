@@ -92,6 +92,8 @@ Here I give some disclaimers about my solution:
 - In my solution I have moved away from the Reflection approach of calling the controller by looking up the method name.  
   Instead I have gone for a more OOP approach, which in my opinion is easier to read and understand - happy to discuss   
   the pros/cons of this further 🤠
+- I am coming into this project with still very much a Kotlin mindset, so some of my implementations may be more Kotliny than 
+  expected!
 
 
 #### Assumptions
